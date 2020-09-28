@@ -135,7 +135,7 @@ body {
         }
 
 .hero {
-    height: 75vh;
+    min-height: 75vh;
     width: 100vw;
     flex-direction: column;
     justify-content: center;
