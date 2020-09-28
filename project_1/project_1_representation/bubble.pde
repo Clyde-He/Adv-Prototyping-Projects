@@ -4,32 +4,43 @@ class Bubble {
   float size;
   float velX;
   float velY;
-  color bubbleC;
-  
-  Bubble(float tempPosX, float tempPosY){
+  color bubbleColor;
+  int breakCycle;
+  int breakCycleCounter = 0;
+  //float envEffector;
+
+  Bubble(float tempPosX, float tempPosY, float tempEnvEffector) {
     posX = tempPosX;
     posY = tempPosY;
-    size = random(50,100);
-    velX = random(-5,5);
-    velY = random(-5,5);
-    bubbleC = color(random(200,255),random(200,255),random(200,255),40);
+    size = random(50, 100);
+    velX = random(-5, 5) * tempEnvEffector;
+    velY = random(-5, 5) * tempEnvEffector;
+    bubbleColor = color(random(200, 255), random(200, 255), random(200, 255), 90);
+    breakCycle = int(random(300, 1200) * tempEnvEffector);
   }
-  
-  void show(){
+
+  void show() {
     noStroke();
-    fill(bubbleC);
-    circle(posX,posY,size);
+    fill(bubbleColor);
+    circle(posX, posY, size);
   }
   
-  void move(){
+  boolean boop() {
+    breakCycleCounter += 1;
+    return breakCycleCounter == breakCycle;
+  }
+
+  void move() {
     posX += velX;
     posY += velY;
     if (posX >= width - size / 2 || posX <= size / 2) {
       velX = velX * -1;
     }
-    
+
     if (posY >= height - size / 2 || posY <= size / 2) {
       velY = velY * -1;
     }
   }
+  
+  
 }
