@@ -25,6 +25,7 @@ h1 {
     line-height: 64px;
     font-family: dinNormal;
     color: rgb(50, 50, 50);
+    letter-spacing: -2px;
 }
 
 h2 {
@@ -34,6 +35,7 @@ h2 {
     line-height: 64px;
     font-family: dinUltralight;
     color: rgb(102, 102, 102);
+    letter-spacing: -2px;
 }
 
 h3 {
@@ -43,6 +45,7 @@ h3 {
     line-height: 44px;
     font-family: dinLight;
     color: rgb(102, 102, 102);
+    letter-spacing: -1px;
 }
 
 h4 {
@@ -52,6 +55,7 @@ h4 {
     line-height: 36px;
     font-family: dinNormal;
     color: rgb(50, 50, 50);
+    letter-spacing: -0.25px;
 }
 
 h5 {
@@ -61,6 +65,7 @@ h5 {
     line-height: 28px;
     font-family: dinNormal;
     color: rgb(50, 50, 50);
+    letter-spacing: -0.3px;
 }
 
 h6 {
@@ -70,6 +75,7 @@ h6 {
     line-height: 24px;
     font-family: dinNormal;
     color: rgb(102, 102, 102);
+    letter-spacing: -0.1px;
 }
 
 p {
@@ -79,6 +85,7 @@ p {
     line-height: 28px;
     font-family: dinNormal;
     color: rgb(102, 102, 102);
+    letter-spacing: -0.25px;
 }
 
 a, a:visited {
