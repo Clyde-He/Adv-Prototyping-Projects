@@ -1,0 +1,160 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: dinNormal;
+    src: url(resources/fonts/din_next_pro_normal.otf);
+}
+
+@font-face {
+    font-family: dinLight;
+    src: url(resources/fonts/din_next_pro_light.otf);
+}
+
+@font-face {
+    font-family: dinUltralight;
+    src: url(resources/fonts/din_next_pro_ultralight.otf);
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 56px;
+    line-height: 64px;
+    font-family: dinNormal;
+    color: rgb(50, 50, 50);
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 56px;
+    line-height: 64px;
+    font-family: dinUltralight;
+    color: rgb(102, 102, 102);
+}
+
+h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 36px;
+    line-height: 44px;
+    font-family: dinLight;
+    color: rgb(102, 102, 102);
+}
+
+h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    line-height: 36px;
+    font-family: dinNormal;
+    color: rgb(50, 50, 50);
+}
+
+h5 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    line-height: 28px;
+    font-family: dinNormal;
+    color: rgb(50, 50, 50);
+}
+
+h6 {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: dinNormal;
+    color: rgb(102, 102, 102);
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 28px;
+    font-family: dinNormal;
+    color: rgb(102, 102, 102);
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: rgb(102, 102, 102);
+}
+
+.flex-container {
+    display: flex;
+    box-sizing: border-box;
+}
+
+.grid-container {
+    display: grid;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+/* ---------- Page Elements ---------- */
+
+.nav-bar {
+    position: absolute;
+    height: 64px;
+    width: 100%;
+}
+
+    .nav-home-btn {
+        box-sizing: border-box;
+        position: absolute;
+        height: 48px;
+        width: 48px;
+        margin: 8px;
+        padding: 8px;
+    }
+
+.hero {
+    height: 75vh;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .header-container {
+        width: 72vw;
+        max-width: 1080px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+.repo {
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .repo-grid {
+        width: 75vw;
+        max-width: 1080px;
+        grid-column-gap: 48px;
+        grid-row-gap: 48px;
+        grid-template-columns: 1fr 1fr;
+        padding-bottom: 12.5vw;
+    }
+
+        .repo-container {
+            padding: 48px;
+            background-color: rgb(245, 245, 245);
+            border-radius: 16px;
+            grid-template-rows: auto auto auto;
+            grid-row-gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
