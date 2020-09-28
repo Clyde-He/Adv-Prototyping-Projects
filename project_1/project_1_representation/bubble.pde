@@ -16,18 +16,13 @@ class Bubble {
     velX = random(-5, 5) * tempEnvEffector;
     velY = random(-5, 5) * tempEnvEffector;
     bubbleColor = color(random(200, 255), random(200, 255), random(200, 255), 90);
-    breakCycle = int(random(300, 1200) * tempEnvEffector);
+    breakCycle = int(random(150, 450) * tempEnvEffector);
   }
 
   void show() {
     noStroke();
     fill(bubbleColor);
     circle(posX, posY, size);
-  }
-  
-  boolean boop() {
-    breakCycleCounter += 1;
-    return breakCycleCounter == breakCycle;
   }
 
   void move() {
@@ -41,6 +36,14 @@ class Bubble {
       velY = velY * -1;
     }
   }
-  
-  
+
+  boolean boop() {
+    breakCycleCounter += 1;
+    return breakCycleCounter == breakCycle;
+  }
+
+  float[] bubblePos() {
+    float[] tempPos = {posX, posY};
+    return tempPos;
+  }
 }
