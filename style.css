@@ -1,3 +1,7 @@
+* {
+    text-rendering: geometricPrecision;
+}
+
 @font-face {
     font-family: dinNormal;
     src: url(resources/fonts/din_next_pro_normal.otf);
