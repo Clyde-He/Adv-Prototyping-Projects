@@ -26,9 +26,9 @@ class Leaf {
     //rotate(90);
     //square(posX, posY, size);
     stroke(color(255, 0, 0));
-    curve(-150, 0, 0, 0, 0, 130, -150, 130);
+    curve(-100, 0, 0, 0, 0, 50, -100, 50);
     stroke(color(0, 255, 0));
-    curve(150, 0, 0, 0, 0, 130, 150, 130);
+    curve(100, 0, 0, 0, 0, 50, 100, 50);
     popMatrix();
   }
 
