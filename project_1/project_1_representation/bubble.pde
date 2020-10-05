@@ -1,49 +1,49 @@
 class Bubble {
-  float posX;
-  float posY;
+  PVector position = new PVector(0,0);
+  PVector acceleration = new PVector(0,0);
+  PVector velocity = new PVector(0,0);
   float size;
-  float velX;
-  float velY;
   color bubbleColor;
   int breakCycle;
   int breakCycleCounter = 0;
-  //float envEffector;
 
-  Bubble(float tempPosX, float tempPosY, float tempEnvEffector) {
-    posX = tempPosX;
-    posY = tempPosY;
+  Bubble(float tempPosX, float tempPosY, int windLevel) {
+    position.x = tempPosX;
+    position.y = tempPosY;
     size = random(50, 100);
-    velX = random(-5, 5) * tempEnvEffector;
-    velY = random(-5, 5) * tempEnvEffector;
-    bubbleColor = color(random(200, 255), random(200, 255), random(200, 255), 90);
-    breakCycle = int(random(150, 450) * tempEnvEffector);
+    velocity = new PVector(random(-5, 5), random(-5, 5));
+    bubbleColor = color(random(0, 255), random(0, 255), random(0, 255), 100);
+    breakCycle = int(random(240, 1200) / windLevel * 2);
+  }
+  
+  void applyWind(PVector wind) {
+    PVector force = new PVector(wind.x / size, wind.y);
+    acceleration.add(force);
   }
 
   void show() {
     noStroke();
     fill(bubbleColor);
-    circle(posX, posY, size);
+    circle(position.x, position.y, size);
   }
 
   void move() {
-    posX += velX;
-    posY += velY;
-    if (posX >= width - size / 2 || posX <= size / 2) {
-      velX = velX * -1;
+    
+    velocity.add(acceleration);
+    position.add(velocity);
+    acceleration.mult(0);
+    
+    if (position.x >= width - size / 2 || position.x <= size / 2) {
+      velocity.x = velocity.x * -1;
     }
 
-    if (posY >= height - size / 2 || posY <= size / 2) {
-      velY = velY * -1;
+    if (position.y >= height - size / 2 || position.y <= size / 2) {
+      velocity.y = velocity.y * -1;
     }
   }
 
   boolean boop() {
     breakCycleCounter += 1;
     return breakCycleCounter == breakCycle;
-  }
-
-  float[] bubblePos() {
-    float[] tempPos = {posX, posY};
-    return tempPos;
   }
 }

@@ -1,44 +1,50 @@
 class Leaf {
-  float posX;
-  float posY;
+  PVector position;
+  PVector velocity;
+  PVector acceleration;
   float size;
-  float velX;
-  float velY;
   float envEffector;
-  float angle;
+  float rotateAngle;
+  float shapeControl1;
+  float shapeControl2;
+  color leafColor;
 
-  Leaf(float tempEnvEffector) {
-    envEffector = tempEnvEffector;
-    posX = random(0, 1024);
-    posY = 0;
-    size = random(25, 50);
-    velX = random(-3, 3) * envEffector;
-    velY = random(1, 3) * envEffector * 1.5;
-    angle = random(-PI, PI);
+  Leaf() {
+    position = new PVector(random(-512, 1536), -50);
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0);
+    size = random(3, 6);
+    rotateAngle = random(-PI, PI);
+    shapeControl1 = random(18, 22);
+    shapeControl2 = random(8, 12);
+    
+    leafColor = color(random(0, 40), random(122, 202), random(35, 115));
   }
 
   void show() {
     pushMatrix();
-    translate(posX, posY);
-    rotate(angle);
-    //noStroke();
-    fill(color(0, 162, 75));
-    //rotate(90);
-    //square(posX, posY, size);
-    stroke(color(255, 0, 0));
-    curve(-100, 0, 0, 0, 0, 50, -100, 50);
-    stroke(color(0, 255, 0));
-    curve(100, 0, 0, 0, 0, 50, 100, 50);
+    translate(position.x, position.y);
+    rotate(rotateAngle);
+    stroke(leafColor);
+    fill(leafColor);
+    curve(-shapeControl1 * size, 0, 0, 0, 0, shapeControl2 * size, -shapeControl1 * size, shapeControl2 * size);
+    stroke(leafColor);
+    curve(shapeControl1 * size, 0, 0, 0, 0, shapeControl2 * size, shapeControl1 * size, shapeControl2 * size);
     popMatrix();
   }
 
-  float[] leafPos() {
-    float[] tempPos = {posX, posY};
-    return tempPos;
+  void applyWind(PVector wind) {
+    PVector force = new PVector(wind.x / size * 0.05, wind.y);
+    acceleration.add(force);
+  }
+  
+  void applyGravity(PVector gravity) {
+    PVector force = new PVector(gravity.x, gravity.y * size * 0.1);
+    acceleration.add(force);
   }
 
   boolean gone() {
-    if (posX >= width || posX <= 0 || posY >= height) {
+    if (position.x >= 1536 || position.x <= -512 || position.y >= height) {
       return true;
     } else {
       return false;
@@ -46,7 +52,8 @@ class Leaf {
   }
 
   void move() {
-    posX += velX;
-    posY += velY;
+    velocity.add(acceleration);
+    position.add(velocity);
+    acceleration.mult(0);
   }
 }
