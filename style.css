@@ -93,6 +93,16 @@ p {
     letter-spacing: -0.25px;
 }
 
+i {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 28px;
+    font-family: dinNormal;
+    color: rgb(50, 50, 50);
+    letter-spacing: -0.25px;
+}
+
 a, a:visited {
     text-decoration: none;
     color: rgb(102, 102, 102);
@@ -112,7 +122,12 @@ body {
     margin: 0;
 }
 
-/* ---------- Page Elements ---------- */
+img {
+    width: 72vw;
+    max-width: 1080px;
+}
+
+/* ---------- Index Page Elements ---------- */
 
 .nav-bar {
     position: absolute;
@@ -174,5 +189,42 @@ body {
             grid-template-rows: auto auto auto;
             grid-row-gap: 8px;
             justify-content: center;
-            align-items: center;
+            align-content: start;
+        }
+
+/* ---------- Article Page Elements ---------- */
+
+.article-hero {
+    min-height: 25vh;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 256px 0px 64px 0px;
+}
+
+    .article-header-container {
+        width: 72vw;
+        max-width: 1080px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+        .article-header-h5 {
+            padding-bottom: 32px;
+        }
+
+    .article-paragraph-container {
+        width: 100vw;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 12.5vw;
+    }
+
+        .article-paragraph {
+            width: 72vw;
+            max-width: 1080px;
+            grid-row-gap: 32px;
         }
