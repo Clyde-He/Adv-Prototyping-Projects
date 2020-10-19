@@ -13,7 +13,9 @@ int windLevel;
 PVector windForce;
 PVector gravity;
 boolean breakDetector = false;
+boolean pressDetector = false;
 color backgroundColor;
+color backgroundWeatherOverlay;
 
 void setup() {
 
@@ -23,7 +25,7 @@ void setup() {
   myPort.bufferUntil(lf);
 
   //Basic Setup
-  colorMode(HSB, 360, 100, 100);
+  colorMode(HSB, 360, 100, 100, 100);
   frameRate(60);
   size(1024, 1024);
 
@@ -35,134 +37,163 @@ void setup() {
 
 void draw() {
 
-  sepString = inString.substring(0, 3);
+  if (inString != null) {
+    String[] data = split(trim(inString), ":");
+    //printArray(data);
+    if (data.length == 5) {
 
-  if (sepString.equals("knb")) {
-    int knbMap = int(map(float(inString.substring(4)), 0, 4096, -100, 101));
-    windForce.x = int(knbMap / 4);
-    windLevel = abs(int(windForce.x)) + 1;
-    backgroundColor = color(198, 50, 100 - abs(knbMap));
-    background(backgroundColor);
-    println(knbMap);
-  } else if (sepString.equals("btn")) {
-    if (float(inString.substring(4)) < 1) { 
-      allBubbles.add(new Bubble(random(1024), random(1024), windLevel));
-    }
-  }
+      //Draw Time Background
 
-  //Add leaf at a interval
-  
-  if (leafShowFrequency == 0) {
-    leafShowFrequency = int(random(30, 180) / (windLevel));
-  } else {
-    leafShowFrequencyCounter += 1;
-  }
+      int timeMap = int(map(float(data[2]), 0, 4096, 0, 101));
+      backgroundColor = color(199, 100, 100 - timeMap);
+      background(backgroundColor);
+      
+      //Draw Sun and Moon
+      
+      int moonPos = int(map(float(data[2]), 0, 4096, 196, -828));
+      fill(42,100,100);
+      noStroke();
+      circle(moonPos,196,256);
+      fill(54,77,100);
+      noStroke();
+      circle(moonPos+1024,196,256);
+      fill(backgroundColor);
+      noStroke();
+      circle(moonPos+1024+128,196,256);
 
-  if (leafShowFrequencyCounter == leafShowFrequency) {
-    allLeaves.add(new Leaf());
-    leafShowFrequency = 0;
-    leafShowFrequencyCounter = 0;
-  }
+      //Draw Tree
+      
+      fill(16,30,55);
+      noStroke();
+      rect(896,0,128,1024);
+      fill(151,56,78);
+      noStroke();
+      circle(1024,-71,878);
+      circle(645,-141,622);
+      
+      //Draw Weather Overlay
 
-  //Draw & update leaf
-  
-  if (allLeaves.size() != 0) {
+      int weatherMap = int(map(float(data[3]), 0, 4096, -100, 101));
+      windForce.x = int(weatherMap / 4);
+      windLevel = abs(int(windForce.x)) + 1;
+      backgroundWeatherOverlay = color(145, 0, 80 - timeMap * 0.6, abs(weatherMap) * 0.9);
+      fill(backgroundWeatherOverlay);
+      noStroke();
+      square(0, 0, 1024);
 
-    for (Leaf currentLeaf : allLeaves) {
+      //Add bubble if button pressed
 
-      currentLeaf.applyWind(windForce);
-      currentLeaf.applyGravity(gravity);
-      currentLeaf.show();
-      currentLeaf.move();
-    }
-  }
-
-  //Remove outside leaf from array
-  
-  for (int index = allLeaves.size() - 1; index >= 0; index--) {
-    Leaf tempLeaf = allLeaves.get(index);
-    if (tempLeaf.gone()) {
-      allLeaves.remove(index);
-    }
-  }
-
-  //Draw & update bubble
-
-  if (allBubbles.size() != 0) {
-
-    for (Bubble currentBubble : allBubbles) {
-      currentBubble.show();
-      currentBubble.move();
-      currentBubble.applyWind(windForce);
+      if (pressDetector == false) {
+        if (float(data[4]) == 0) {
+          pressDetector = true;
+        }
+      } else {
+        if (float(data[4]) == 1) {
+          pressDetector = false;
+          allBubbles.add(new Bubble(map(float(data[0]), 0, 4096, 0, 1024), map(float(data[1]), 0, 4096, 0, 1024), windLevel));
+        }
+      }
     }
 
-    //Remove booped bubble from array
+    //Add leaf at a interval
 
-    for (Bubble readBubble : allBubbles) {
-      restBubbles.add(readBubble);
+    if (leafShowFrequency == 0) {
+      leafShowFrequency = int(random(30, 180) / (windLevel));
+    } else {
+      leafShowFrequencyCounter += 1;
     }
 
-    for (int index = allBubbles.size() - 1; index >= 0; index--) {
-      Bubble currentBubble = allBubbles.get(index);
+    if (leafShowFrequencyCounter == leafShowFrequency) {
+      allLeaves.add(new Leaf());
+      leafShowFrequency = 0;
+      leafShowFrequencyCounter = 0;
+    }
+
+    //Draw & update leaf
+
+    if (allLeaves.size() != 0) {
 
       for (Leaf currentLeaf : allLeaves) {
-        if (dist(currentBubble.position.x, currentBubble.position.y, currentLeaf.position.x, currentLeaf.position.y) < currentBubble.size / 2) {
-          allBubbles.remove(index);
-        }
-      }
 
-      if (restBubbles.size() > 0) {
-        restBubbles.remove(index);
-        for (int index2 = restBubbles.size() - 1; index2 >= 0; index2--) {
-          Bubble comparingBubble = restBubbles.get(index2);
-          if (dist(currentBubble.position.x, currentBubble.position.y, comparingBubble.position.x, comparingBubble.position.y) < (currentBubble.size + comparingBubble.size) / 2) {
-            allBubbles.remove(index);
-            allBubbles.remove(index2);
-            breakDetector = true;
-          }
-        }
-      }
-
-      if (currentBubble.boop()) {
-        allBubbles.remove(index);
-      }
-
-      if (breakDetector == true) {
-        break;
+        currentLeaf.applyWind(windForce);
+        currentLeaf.applyGravity(gravity);
+        currentLeaf.show();
+        currentLeaf.move();
       }
     }
 
-    restBubbles = new ArrayList<Bubble>();
-    breakDetector = false;
+    //Remove outside leaf from array
+
+    for (int index = allLeaves.size() - 1; index >= 0; index--) {
+      Leaf tempLeaf = allLeaves.get(index);
+      if (tempLeaf.gone()) {
+        allLeaves.remove(index);
+      }
+    }
+
+    //Draw & update bubble
+
+    if (allBubbles.size() != 0) {
+
+      for (Bubble currentBubble : allBubbles) {
+        currentBubble.show();
+        currentBubble.move();
+        currentBubble.applyWind(windForce);
+      }
+
+      //Remove booped bubble from array
+
+      for (Bubble readBubble : allBubbles) {
+        restBubbles.add(readBubble);
+      }
+
+      for (int index = allBubbles.size() - 1; index >= 0; index--) {
+        Bubble currentBubble = allBubbles.get(index);
+
+        for (Leaf currentLeaf : allLeaves) {
+          if (dist(currentBubble.position.x, currentBubble.position.y, currentLeaf.position.x, currentLeaf.position.y) < currentBubble.size / 2) {
+            allBubbles.remove(index);
+          }
+        }
+
+        if (restBubbles.size() > 0) {
+          restBubbles.remove(index);
+          for (int index2 = restBubbles.size() - 1; index2 >= 0; index2--) {
+            Bubble comparingBubble = restBubbles.get(index2);
+            if (dist(currentBubble.position.x, currentBubble.position.y, comparingBubble.position.x, comparingBubble.position.y) < (currentBubble.size + comparingBubble.size) / 2) {
+              allBubbles.remove(index);
+              allBubbles.remove(index2);
+              breakDetector = true;
+            }
+          }
+        }
+
+        if (currentBubble.boop()) {
+          allBubbles.remove(index);
+        }
+
+        if (breakDetector == true) {
+          break;
+        }
+      }
+
+      restBubbles = new ArrayList<Bubble>();
+      breakDetector = false;
+    }
+
+    //Draw bubble blower
+    
+    int posXMap = int(map(float(data[0]), 0, 4096, 0, 1045));
+    int posYMap = int(map(float(data[1]), 0, 4096, 0, 1045));
+    fill(0, 0, 0, 0);
+    strokeWeight(6);
+    stroke(0, 0, 100);
+    circle(posXMap, posYMap, 40);
+    
   }
 }
 
-//void mouseClicked() {
-//  allBubbles.add(new Bubble(mouseX, mouseY, windLevel));
-//}
+void serialEvent(Serial p) {
 
-//void keyPressed() {
-//  if (keyCode == LEFT) {
-//    windForce.x -= 1;
-//    if (windForce.x >= 0) {
-//      windLevel -= 1;
-//    } else {
-//      windLevel += 1;
-//    }
-//  } else if (keyCode == RIGHT) {
-//    windForce.x += 1;
-//    if (windForce.x <= 0) {
-//      windLevel -= 1;
-//    } else {
-//      windLevel += 1;
-//    }
-//  }
-
-//  println(windLevel);
-//  println(windForce);
-//  backgroundColor = color(128 / (1 + ((windLevel -1)  * 0.25)), 216 / (1+((windLevel -1) * 0.25)), 255 / (1+((windLevel -1) * 0.25)));
-//}
-
-void serialEvent(Serial p) { 
   inString = p.readString();
 } 

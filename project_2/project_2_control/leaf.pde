@@ -13,12 +13,12 @@ class Leaf {
     position = new PVector(random(-512, 1536), -50);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
-    size = random(3, 6);
+    size = random(2, 4);
     rotateAngle = random(-PI, PI);
     shapeControl1 = random(18, 22);
     shapeControl2 = random(8, 12);
     
-    leafColor = color(random(0, 40), random(122, 202), random(35, 115));
+    leafColor = color(151, 56, random(78, 100));
   }
 
   void show() {
