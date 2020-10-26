@@ -10,6 +10,7 @@ ArrayList<Leaf> allLeaves = new ArrayList<Leaf>();
 int leafShowFrequency = 0;
 int leafShowFrequencyCounter = 0;
 int windLevel;
+PVector bubblePointer;
 PVector windForce;
 PVector gravity;
 boolean breakDetector = false;
@@ -28,7 +29,8 @@ void setup() {
   colorMode(HSB, 360, 100, 100, 100);
   frameRate(60);
   size(1024, 1024);
-
+  
+  bubblePointer = new PVector(512,512);
   windForce = new PVector(0, 0);
   gravity = new PVector(0, 1);
 
@@ -90,7 +92,7 @@ void draw() {
       } else {
         if (float(data[4]) == 1) {
           pressDetector = false;
-          allBubbles.add(new Bubble(map(float(data[0]), 0, 4096, 0, 1024), map(float(data[1]), 0, 4096, 0, 1024), windLevel));
+          allBubbles.add(new Bubble(bubblePointer.x, bubblePointer.y, windLevel));
         }
       }
     }
@@ -183,13 +185,42 @@ void draw() {
 
     //Draw bubble blower
     
-    int posXMap = int(map(float(data[0]), 0, 4096, 0, 1045));
-    int posYMap = int(map(float(data[1]), 0, 4096, 0, 1045));
+    int posXMoveMap = int(map(float(data[0]), 0, 4096, 0, 31));
+    int posYMoveMap = int(map(float(data[1]), 0, 4096, 0, 31));
+    
+    print(posXMoveMap);
+    print(":");
+    print(posYMoveMap);
+    print(":");
+    print(bubblePointer.x);
+    print(":");
+    println(bubblePointer.y);
+    
     fill(0, 0, 0, 0);
     strokeWeight(6);
     stroke(0, 0, 100);
-    circle(posXMap, posYMap, 40);
     
+    if (bubblePointer.x + posXMoveMap - 15 <= 23) {
+      bubblePointer.x = 23;
+    }
+    else if (bubblePointer.x + posXMoveMap - 15 >= 1001) {
+      bubblePointer.x = 1001;
+    }
+    else if (bubblePointer.x >= 23 && bubblePointer.x <= 1001) {
+      bubblePointer.x += posXMoveMap - 15; 
+    }
+    
+    if (bubblePointer.y + posYMoveMap - 15 <= 23) {
+      bubblePointer.y = 23;
+    }
+    else if (bubblePointer.y + posYMoveMap - 15 >= 1001) {
+      bubblePointer.y = 1001;
+    }
+    else if (bubblePointer.y >= 23 && bubblePointer.y <= 1001) {
+      bubblePointer.y += posYMoveMap - 15;
+    }
+    
+    circle(bubblePointer.x, bubblePointer.y, 40);
   }
 }
 
