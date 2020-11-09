@@ -22,12 +22,12 @@
         let colorH = 0;
         let colorS = 100;
 
-        particle.login({username: 'the4@inside.artcenter.edu', password: '127HTHclyde127'}).then(
+        particle.login({username: 'USERNAME', password: 'PASSWORD'}).then(
             function(data) {
                 token = data.body.access_token;
                 console.log("Hello there!");
 
-                particle.getEventStream({ deviceId: 'e00fce68382d1061af2a22a7', name:'pointerXValue', auth: token }).then(function(stream) {
+                particle.getEventStream({ deviceId: 'DEVICEID', name:'pointerXValue', auth: token }).then(function(stream) {
                     stream.on('event', function(data) {
                         console.log("Event: ", data);
 
@@ -39,7 +39,7 @@
                     });
                 });
 
-                particle.getEventStream({ deviceId: 'e00fce68382d1061af2a22a7', name:'pointerYValue', auth: token }).then(function(stream) {
+                particle.getEventStream({ deviceId: 'DEVICEID', name:'pointerYValue', auth: token }).then(function(stream) {
                     stream.on('event', function(data) {
                         console.log("Event: ", data);
 
