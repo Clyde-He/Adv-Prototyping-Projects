@@ -194,8 +194,8 @@ img {
     border-radius: 16px;
     grid-template-rows: auto auto auto;
     grid-row-gap: 8px;
-    justify-content: start;
-    align-content: center;
+    justify-content: center;
+    align-content: start;
 }
 
 /* ---------- Article Page Elements ---------- */
