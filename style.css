@@ -194,7 +194,7 @@ img {
     border-radius: 16px;
     grid-template-rows: auto auto auto;
     grid-row-gap: 8px;
-    justify-content: center;
+    justify-content: start;
     align-content: center;
 }
 
