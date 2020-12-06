@@ -85,6 +85,7 @@ h6 {
 
 p {
     margin: 0;
+    margin-bottom: 32px;
     padding: 0;
     font-size: 18px;
     line-height: 28px;
@@ -95,6 +96,7 @@ p {
 
 i {
     margin: 0;
+    margin-bottom: 32px;
     padding: 0;
     font-size: 18px;
     line-height: 28px;
@@ -103,7 +105,8 @@ i {
     letter-spacing: -0.25px;
 }
 
-a, a:visited {
+a,
+a:visited {
     text-decoration: none;
     color: rgb(102, 102, 102);
 }
@@ -116,6 +119,7 @@ a, a:visited {
 .grid-container {
     display: grid;
     box-sizing: border-box;
+
 }
 
 body {
@@ -123,8 +127,10 @@ body {
 }
 
 img {
-    width: 72vw;
-    max-width: 1080px;
+    width: 50vw;
+    max-width: 720px;
+    align-self: center;
+    margin-bottom: 32px;
 }
 
 /* ---------- Index Page Elements ---------- */
@@ -135,19 +141,19 @@ img {
     width: 100%;
 }
 
-    .nav-home-btn {
-        box-sizing: border-box;
-        position: absolute;
-        height: 48px;
-        width: 48px;
-        margin: 8px;
-        padding: 8px;
-    }
+.nav-home-btn {
+    box-sizing: border-box;
+    position: absolute;
+    height: 48px;
+    width: 48px;
+    margin: 8px;
+    padding: 8px;
+}
 
-        .nav-home-btn-img {
-            height: 32px;
-            width: 32px;
-        }
+.nav-home-btn-img {
+    height: 32px;
+    width: 32px;
+}
 
 .hero {
     min-height: 75vh;
@@ -158,13 +164,13 @@ img {
     padding: 256px 0px 256px 0px;
 }
 
-    .header-container {
-        width: 72vw;
-        max-width: 1080px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-    }
+.header-container {
+    width: 72vw;
+    max-width: 1080px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
 
 .repo {
     width: 100vw;
@@ -173,24 +179,24 @@ img {
     align-items: center;
 }
 
-    .repo-grid {
-        width: 75vw;
-        max-width: 1080px;
-        grid-column-gap: 48px;
-        grid-row-gap: 48px;
-        grid-template-columns: 1fr 1fr;
-        padding-bottom: 12.5vw;
-    }
+.repo-grid {
+    width: 75vw;
+    max-width: 1080px;
+    grid-column-gap: 48px;
+    grid-row-gap: 48px;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 12.5vw;
+}
 
-        .repo-container {
-            padding: 48px;
-            background-color: rgb(245, 245, 245);
-            border-radius: 16px;
-            grid-template-rows: auto auto auto;
-            grid-row-gap: 8px;
-            justify-content: center;
-            align-content: start;
-        }
+.repo-container {
+    padding: 48px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 16px;
+    grid-template-rows: auto auto auto;
+    grid-row-gap: 8px;
+    justify-content: start;
+    align-content: center;
+}
 
 /* ---------- Article Page Elements ---------- */
 
@@ -203,28 +209,31 @@ img {
     padding: 256px 0px 64px 0px;
 }
 
-    .article-header-container {
-        width: 72vw;
-        max-width: 1080px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-    }
+.article-header-container {
+    width: 72vw;
+    max-width: 1080px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
 
-        .article-header-h5 {
-            padding-bottom: 32px;
-        }
+.article-header-h5 {
+    padding-bottom: 32px;
+}
 
-    .article-paragraph-container {
-        width: 100vw;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 12.5vw;
-    }
+.article-paragraph-container {
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 12.5vw;
+}
 
-        .article-paragraph {
-            width: 72vw;
-            max-width: 1080px;
-            grid-row-gap: 32px;
-        }
+.article-paragraph {
+    width: 72vw;
+    max-width: 1080px;
+    grid-row-gap: 0px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
