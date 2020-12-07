@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 3</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+    <script>
+
+        let generalSsrValueURL = "https://api.particle.io/v1/devices/e00fce68382d1061af2a22a7/general_ssr_value?access_token=0930f13c270866353de281747e0789101d21e4a7";
+
+        var generalSsrData;
+        var generalSsrResult;
+
+        var tempResult = 0;
+        var moveResult = 0;
+        var lightResult = 0;
+
+        var tempValueArray = [];
+        var tempPosArray = []
+
+        var lightValueArray;
+        var lightPosArray = [];
+        var lightMoveArray = [];
+
+        var currentTimeCycle, previousTimeCycle;
+        var colorTransCounter = 0;
+        var lightMoveArrayCounter = 0;
+
+        var currentColor1, currentColor2;
+
+        function setup() {
+
+            createCanvas(1920, 1080);
+            currentTimeCycle = 0;
+            previousTimeCycle = 0;
+            colorMode(HSB, 360, 100, 100, 1);
+            frameRate(30);
+
+        }
+
+        function draw() {
+
+            let coldColor1 = color(145, 100, 78);
+            let coldColor2 = color(151, 100, 90);
+            let warmColor1 = color(40, 100, 100);
+            let warmColor2 = color(47, 75, 100);
+            let hotColor1 = color(12, 100, 87);
+            let hotColor2 = color(14, 75, 100);
+
+            currentTimeCycle = millis() % 1000;
+
+            //Initialize lightValueArray
+
+            if (lightValueArray == undefined) {
+                var tmpArray = [];
+                lightValueArray = new Array();
+                lightValueArray.push(tmpArray);
+                lightPosArray.push(816);
+                lightMoveArray.push(false);
+            }
+
+            //Data Passing
+            if (currentTimeCycle < previousTimeCycle) {
+                generalSsrData = loadJSON(generalSsrValueURL, parseGeneralData, handleErrors);
+
+                if (tempResult != 0) {
+                    tempValueArray.push(tempResult);
+                    tempPosArray.push(816);
+                }
+
+                lightMoveArrayCounter++;
+
+                //If reach 10 sec add new group into lightValueArray
+
+                if (lightMoveArrayCounter == 10) {
+                    lightMoveArray[lightMoveArray.length - 1] = true;
+                    var tmpArray = [];
+                    lightValueArray.push(tmpArray);
+                    lightPosArray.push(816);
+                    lightMoveArray.push(false);
+                    lightMoveArrayCounter = 0;
+                }
+
+                //If Light Hit 3000 add new data into latest group in the lightValueArray
+
+                if (lightResult > 3000) {
+                    lightValueArray[lightValueArray.length - 1].push(tempValueArray.length - 1);
+                }
+
+            }
+
+
+
+
+            // console.log(lightResult);
+
+
+            //Create Background Base on Fan Vibration
+
+            if (currentColor1 == undefined) {
+                currentColor1 = coldColor1;
+                currentColor2 = coldColor2;
+            }
+
+            if (vibeResult <= 180) {
+                if (colorTransCounter != 30) {
+
+                    var inter = map(colorTransCounter, 0, 30, 0, 1);
+                    var tempC1 = lerpColor(currentColor1, coldColor1, inter);
+                    var tempC2 = lerpColor(currentColor2, coldColor2, inter);
+                    setGradient(tempC1, tempC2);
+                    strokeWeight(3);
+                    stroke(0, 0, 100);
+                    circle(60, 62, 24);
+                    circle(60, 104, 24);
+                    noStroke();
+                    textSize(24);
+                    fill(0, 0, 100);
+                    text("CPU Fans", 86, 71);
+                    text("GPU Fans", 86, 113);
+                    colorTransCounter++;
+                }
+                else {
+                    colorTransCounter = 0;
+                    currentColor1 = coldColor1;
+                    currentColor2 = coldColor2;
+                }
+            }
+            else if (vibeResult > 200 && vibeResult <= 295) {
+                if (colorTransCounter != 30) {
+                    var inter = map(colorTransCounter, 0, 30, 0, 1);
+                    var tempC1 = lerpColor(currentColor1, warmColor1, inter);
+                    var tempC2 = lerpColor(currentColor2, warmColor2, inter);
+                    setGradient(tempC1, tempC2);
+                    strokeWeight(3);
+                    stroke(0, 0, 100);
+                    circle(60, 62, 24);
+                    circle(60, 104, 24);
+                    fill(100);
+                    circle(60, 62, 12);
+                    noStroke();
+                    textSize(24);
+                    fill(0, 0, 100);
+                    text("CPU Fans", 86, 71);
+                    text("GPU Fans", 86, 113);
+                    colorTransCounter++;
+                }
+                else {
+                    colorTransCounter = 0;
+                    currentColor1 = warmColor1;
+                    currentColor2 = warmColor2;
+                }
+            }
+            else {
+                if (colorTransCounter != 30) {
+                    var inter = map(colorTransCounter, 0, 30, 0, 1);
+                    var tempC1 = lerpColor(currentColor1, hotColor1, inter);
+                    var tempC2 = lerpColor(currentColor2, hotColor2, inter);
+                    setGradient(tempC1, tempC2);
+                    strokeWeight(3);
+                    stroke(0, 0, 100);
+                    circle(60, 62, 24);
+                    circle(60, 104, 24);
+                    fill(100);
+                    circle(60, 62, 12);
+                    circle(60, 104, 12);
+                    noStroke();
+                    textSize(24);
+                    fill(0, 0, 100);
+                    text("CPU Fans", 86, 71);
+                    text("GPU Fans", 86, 113);
+                    colorTransCounter++;
+                }
+                else {
+                    colorTransCounter = 0;
+                    currentColor1 = hotColor1;
+                    currentColor2 = hotColor2;
+                }
+            }
+
+            //Create Grids
+            strokeWeight(2);
+            stroke(0, 0, 100, 0.25);
+            line(50, 170, 816, 170);
+            line(50, 210, 816, 210);
+            line(50, 250, 816, 250);
+            line(50, 290, 816, 290);
+            line(50, 330, 816, 330);
+            line(50, 370, 816, 370);
+            line(50, 410, 816, 410);
+            textSize(14);
+            fill(0, 0, 100, 0.5);
+            text("70˚C", 830, 185);
+            text("10˚C", 830, 405);
+            text("10 Sec", 790, 150);
+
+            //Create Temp Dots & Curves
+            if (tempResult != 0) {
+                for (var index = tempValueArray.length - 1; index >= 0; index--) {
+                    stroke(0, 0, 100);
+                    if (index == tempValueArray.length - 1) {
+                        strokeWeight(8);
+                    }
+                    else {
+                        strokeWeight(2);
+                    }
+                    point(tempPosArray[index], 450 - tempValueArray[index] * 4);
+                    if (index != 0) {
+                        strokeWeight(2);
+                        fill(0, 0, 0, 0);
+                        curve(tempPosArray[index] + 15, 450 - tempValueArray[index] * 4, tempPosArray[index], 450 - tempValueArray[index] * 4, tempPosArray[index - 1], 450 - tempValueArray[index - 1] * 4, tempPosArray[index - 1] - 15, 450 - tempValueArray[index - 1] * 4);
+                    }
+                    tempPosArray[index] -= 0.4;
+                }
+                fill(0, 0, 100);
+                noStroke();
+                textSize(24);
+                text(str(tempValueArray[tempValueArray.length - 1]) + "˚C", 830, 450 - tempValueArray[tempValueArray.length - 1] * 4 + 10);
+            }
+
+            //Create Light Hit Dots & Curves
+            for (var index = lightMoveArray.length - 1; index >= 0; index--) {
+                if (lightMoveArray[index] == true) {
+                    lightPosArray[index] -= 0.4;
+                }
+            }
+
+            // console.log(lightValueArray);
+
+            for (var index = lightValueArray.length - 1; index >= 0; index--) {
+                stroke(0, 0, 100, 0.25);
+                strokeWeight(2);
+                line(lightPosArray[index], 170, lightPosArray[index], 600);
+                if (lightValueArray[index].length != 0) {
+                    for (var index2 = lightValueArray[index].length - 1; index2 >= 0; index2--) {
+                        stroke(0, 0, 100);
+                        strokeWeight(6);
+                        point(lightPosArray[index], 600 - 16 * index2);
+                        stroke(0, 0, 100, 0.5);
+                        strokeWeight(2);
+                        fill(0, 0, 0, 0);
+                        curve(tempPosArray[lightValueArray[index][index2]], 450 - tempValueArray[lightValueArray[index][index2]] * 4 - 150, tempPosArray[lightValueArray[index][index2]], 450 - tempValueArray[lightValueArray[index][index2]] * 4, lightPosArray[index], 600 - 16 * index2, lightPosArray[index] + 180, 600 - 16 * index2);
+                    }
+                }
+            }
+
+            //Add Cover Overlay
+            // if (colorTransCounter != 30) {
+            //     noFill();
+            //     for (var i = 0; i <= 650; i++) {
+            //         var colorIn = map(i, 0, 650, 1, 0);
+            //         var drawColor = lerpColor(currentColor1, currentColor2, colorIn);
+            //         stroke(drawColor);
+            //         line(0, i, 50, i);
+            //     }
+            // }
+
+            //Remove Out Temp Data
+
+            // if (tempPosArray[0] < 0) {
+            //     tempPosArray.shift();
+            //     tempValueArray.shift();
+            // }
+
+            previousTimeCycle = currentTimeCycle;
+            // console.log(previousTimeCycle);
+            // console.log(currentTimeCycle);
+        }
+
+        function parseGeneralData(JSONData) {
+            generalSsrResult = split(JSONData.result, ":");
+            tempResult = generalSsrResult[0];
+            vibeResult = generalSsrResult[1];
+            lightResult = generalSsrResult[2];
+        }
+
+        function handleErrors(Error) {
+            console.log("There is a error: ", Error);
+        }
+
+        function setGradient(c1, c2) {
+
+            noFill();
+            for (var i = 0; i <= 650; i++) {
+                var inter = map(i, 0, 650, 1, 0);
+                var c = lerpColor(c1, c2, inter);
+                stroke(c);
+                line(0, i, 900, i);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
