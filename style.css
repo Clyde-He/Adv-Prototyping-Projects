@@ -225,6 +225,8 @@ img {
     width: 100vw;
     flex-direction: column;
     justify-content: center;
+    justify-items: center;
+    align-content: center;
     align-items: center;
     padding-bottom: 12.5vw;
 }
@@ -235,5 +237,7 @@ img {
     grid-row-gap: 0px;
     flex-direction: column;
     justify-content: center;
+    justify-items: center;
+    align-content: center;
     align-items: center;
 }

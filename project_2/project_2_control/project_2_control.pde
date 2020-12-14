@@ -22,7 +22,7 @@ void setup() {
 
   //Serial Setup
   printArray(Serial.list());
-  myPort = new Serial(this, Serial.list()[1], 9600); 
+  myPort = new Serial(this, Serial.list()[2], 9600); 
   myPort.bufferUntil(lf);
 
   //Basic Setup
