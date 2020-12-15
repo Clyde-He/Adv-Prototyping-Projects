@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Project 3 Summary</title>
+        <link href="../style.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <div class="nav-bar">
+            <a href="../index.html" class="nav-home-btn">
+                <img src="../resources/images/specos_logo.svg" alt="" class="nav-home-btn-img">
+            </a>
+        </div>
+
+        <div class="article-hero flex-container">
+            <div class="article-header-container flex-container">
+                <h4 class="article-header-h4">2020.10.04</h4>
+                <h1>Project 3</h1>
+                <h2>Process & Summary</h2>
+            </div>
+        </div>
+
+        <div class="article-paragraph-container flex-container">
+            <div class="article-paragraph grid-container">
+                <p>The fourth project is where we can start to pivoting on the aspect that we are interested in. I was always fascinated by how long-term accumulated data from a single person can be generated and visualized, so with this opportunity, and I imagined a project named "Inside World."</p>
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;>Context</h4>
+                <br>
+                <p>I consider "Inside World" as a hybrid between game, art, and data visualization, where the program will collect the user's environment and necessary behaviors. These data will be correspondingly altering different parameters in a self-evolving ecosystem.</p>
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;>Concept</h4>
+                <br>
+                <p>The general concept of "Inside World" is that I tend to simulate a virtual ecosystem adapted and adjusted by different environmental parameters and movements a user created in a day. These parameters, including motion, temperature, light, sound, etc. An ecosystem with moving & changing species will be generated at the beginning of the day. All of the movement of species in the ecosystem will leave trails, and the final result will be displayed at the end of the day. Parameters like time and brightness will affect life generation, and other parameters will alter the environment.</p>
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Impetus</h4>
+                <br>
+                <p>I'm fascinated and inspired by games like "Species" and "Spore," which allow the players to customize different parameters in an ecosystem or species, including gravity, temperature, atmosphere, etc. They enable the player to see how a species can be evolved and altered based on the previous settings. I hope to create something resemblant yet more interesting: change the world with a real indoor environment rather than punching numbers on the screen. Combined with my obsession with cumulative data visualization, this is how the "Inside World" general concept formed.</p>
+                <p>Species</p>
+                <img src="../resources/images/project_4_summary/impetus_1.jpg">
+                <img src="../resources/images/project_4_summary/impetus_2.jpg">
+                <p>Spore</p>
+                <img src="../resources/images/project_4_summary/impetus_3.jpg">
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Goal</h4>
+                <br>
+                <p>The goal of "Inside World" is how the pass of time, how the change of environment is represented in different procedural outcomes. Different daily-activity can drastically change the setting, resulting in the extinction or mutation of the species and their trails. Such open-ended representation can be the most exciting outcome.</p>
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Tools</h4>
+                <br>
+                <p>The project's tools involve particle boards connected with sensors, including proximity, temperature, light, and sound sensors. The whole device will be placed in a fixed location in the room and evolves through the day. They are also going to be transferring data through a serial connection and then processed by Processing.</p>
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">System Diagram</h4>
+                <br>
+                <p>I started with a diagram and sketches to clear out what sensors affect the environment's corresponding parameters. This was when I faced my first obstacle: multiple parameters are affecting the species, and mapping them with only four data inputs can be tricky. I ended up with several rounds of reconsideration while I also settled on what form the species would be.</p>
+                <p>Final Diagram:</p>
+                <img src="../resources/images/project_4_summary/diagram_1.png">
+                <p>Process:</p>
+                <img src="../resources/images/project_4_summary/diagram_2.jpg">
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Storyboard</h4>
+                <br>
+                <p>I originally started with a storyboard that was purposefully designed to have a "practical usage" in the real world. Soon, I realized it is not necessary to promote that idea via competition or only been used under a specific required environment. This was when I started to pivot my whole project into a more harmonious direction: where time, daily life, and cocreation play a vital role in this prototype.</p>
+                <p>Final Storyboard:</p>
+                <img src="../resources/images/project_4_summary/storyboard_1.jpg">
+                <p>Original Storyboard:</p>
+                <img src="../resources/images/project_4_summary/storyboard_2.jpg">
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Prototypes</h4>
+                <br>
+                <p>In the first round of prototypes, I coded the first iteration of the species generating and evolving algorithm and validated that the species' form is achievable through code. Due to the circumstances around us, I also built a little test bench to facilitate my adjustment process. Using potentiometers and buttons to simulate long-term changing data and sudden movement detection rather than using real sensors allows me to change different parameters that affect the movement, regeneration, and connection of the species and quickly see the result.</p>
+                <p>Idea & form validation:</p>
+                <img src="../resources/images/project_4_summary/prototype_1_1.jpg">
+                <p>Fast Test Bench Building:</p>
+                <img src="../resources/images/project_4_summary/prototype_1_2.jpg">
+                <br>
+                <p>The second round of prototypes is where I experimented with the trail system. The connection lines formed between individuals are leaving three-dimensional looking graphic, which significantly enhances the overall look of the ecosystem. I also dived more in-depth into the movement of the species. Previously they were moving randomly as individuals, but as I started experimenting with gravitational attraction and repulsion forces, I was able to mix two movement systems to create a herd-like moving pattern while allows the individuals to move freely on their own.</p>
+                <p>Trail / Pattern Forming:</p>
+                <img src="../resources/images/project_4_summary/prototype_2_1.jpg">
+                <p>Movement & Algorithm Tweaking:</p>
+                <img src="../resources/images/project_4_summary/prototype_2_2.jpg">
+                <br>
+                <p>In the final prototype, I connected all the sensors to make sure they behave as intended. I also introduced a second type of individuals with a different color, so two species together can create more entwined, complicated trails throughout the day.</p>
+                <p>Connecting & Adjusting Sensor:</p>
+                <img src="../resources/images/project_4_summary/prototype_3_1.jpg">
+                <img src="../resources/images/project_4_summary/prototype_3_2.jpg">
+                <p>Color & Form Adjustment:</p>
+                <img src="../resources/images/project_4_summary/prototype_3_3.jpg">
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Final Results</h4>
+                <p>High Temperature - Spread Out:</p>
+                <img src="../resources/images/project_4_summary/final_1.jpg">
+                <p>Low Temperature - Gathered:</p>
+                <img src="../resources/images/project_4_summary/final_2.jpg">
+                <p>Dark Condition - Small Individual:</p>
+                <img src="../resources/images/project_4_summary/final_3.jpg">
+                <p>Bright Condition - Large Individual:</p>
+                <img src="../resources/images/project_4_summary/final_4.jpg">
+                <h4 class="repo-h4" style="justify-self: left; align-self: start;">Future Steps</h4>
+                <br>
+                <p style="justify-self: left; align-self: start;">For the future steps of this project, I think multiple aspect should be further developed:
+                    <br>
+                    - Further tuning the balance of the self-evolving system.
+                    <br>
+                    - Possible 3D rendering for more dimensions & interactions.
+                    <br>
+                    - Color variations based on ecosystem and individual's attributes.
+                    <br>
+                    - Daily summary & more intuitive interactions.
+                    <br>
+                    - Form factor of the final installation.
+                    <br>
+                    - Multi-user cocreation and collaboration.</p>
+            </div>
+        </div>
+    
+    </body>
+
+</html>

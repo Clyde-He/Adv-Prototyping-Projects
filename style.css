@@ -211,7 +211,7 @@ img {
 
 .article-header-container {
     width: 72vw;
-    max-width: 1080px;
+    max-width: 960px;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -233,7 +233,7 @@ img {
 
 .article-paragraph {
     width: 72vw;
-    max-width: 1080px;
+    max-width: 960px;
     grid-row-gap: 0px;
     flex-direction: column;
     justify-content: center;
